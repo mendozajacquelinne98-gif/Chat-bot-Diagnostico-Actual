@@ -141,6 +141,16 @@ function initChat() {
     chatInput.style.height = (chatInput.scrollHeight - 6) + 'px';
   });
 
+  // Enfocar el textarea al hacer clic en el contenedor (facilita el enfoque en tablets/moviles)
+  const chatInputContainer = document.querySelector('.chat-input-container');
+  if (chatInputContainer) {
+    chatInputContainer.addEventListener('click', (e) => {
+      if (e.target !== chatInput && !e.target.closest('.btn-chat-action')) {
+        chatInput.focus();
+      }
+    });
+  }
+
   // Enviar con Enter (sin Shift)
   chatInput.addEventListener('keydown', (e) => {
     if (e.key === 'Enter' && !e.shiftKey) {
