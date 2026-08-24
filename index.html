@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Debug Bot Flex - AI ChatBot</title>
+  <!-- Estilos Personalizados -->
+  <link rel="stylesheet" href="style.css?v=1.8.2">
+  <!-- Carga de Chart.js Local para Soporte Offline -->
+  <script src="chart.js?v=1.8.2"></script>
+</head>
+<body>
+
+  <!-- SIDEBAR DE NAVEGACIÓN LATERAL -->
+  <aside>
+    <ul class="sidebar-menu">
+      <li class="active">
+        <a href="#" data-view="chat">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+          </svg>
+          Chat de Diagnóstico
+        </a>
+      </li>
+      <li>
+        <a href="#" data-view="library">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"></path>
+            <path d="M14.5 9.5L12 12l2.5 2.5m-5-5L7 12l2.5 2.5"></path>
+          </svg>
+          Biblioteca de Fallas
+        </a>
+      </li>
+      <li>
+        <a href="#" data-view="form">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+            <polyline points="14 2 14 8 20 8"></polyline>
+            <line x1="12" y1="18" x2="12" y2="12"></line>
+            <line x1="9" y1="15" x2="15" y2="15"></line>
+          </svg>
+          Documentar Caso
+        </a>
+      </li>
+      <li>
+        <a href="#" data-view="dashboard">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <line x1="18" y1="20" x2="18" y2="10"></line>
+            <line x1="12" y1="20" x2="12" y2="4"></line>
+            <line x1="6" y1="20" x2="6" y2="14"></line>
+          </svg>
+          Dashboard Analítico
+        </a>
+      </li>
+      <li>
+        <a href="#" data-view="docs">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+            <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+          </svg>
+          Manuales GF
+        </a>
+      </li>
+    </ul>
+    
+    <div class="sidebar-footer">
+      <div class="avatar">DX</div>
+      <div class="user-info">
+        <span class="user-name">Ing. Diagnóstico</span>
+        <span class="user-role">Debug Senior</span>
+      </div>
+    </div>
+  </aside>
+
+  <!-- CONTENEDOR PRINCIPAL -->
+  <main>
+    <div class="top-bar">
+      <div class="page-title">
+        <h1>
+          <img src="images/flex_logo.png" alt="Flex Logo" class="header-main-logo">
+          Debug Bot Flex
+        </h1>
+      </div>
+      <!-- PERFIL DE ASISTENTE KAIFISH EN ENCABEZADO -->
+      <div class="header-kaifish-profile">
+        <img id="sidebar-kaifish-img" class="header-profile-avatar kaifish-avatar-sync" src="images/kaifish_feliz.png" alt="Perfil Kaifish">
+      </div>
+    </div>
+
+    <!-- PANELES DE VISTA -->
+    
+    <!-- 1. VISTA DE CHATBOT -->
+    <div id="chat-view" class="view-panel active">
+      <div class="chat-container">
+        
+        <!-- ÁREA DEL CHAT HISTORIAL E INPUT (FULL WIDTH) -->
+        <div class="chat-main-area">
+          <div id="chat-history" class="chat-history">
+            <!-- Mensaje de Bienvenida Inicial Centrado -->
+            <div class="chat-welcome">
+              <div class="welcome-content-container">
+                <!-- IMAGEN PRINCIPAL DEL ASISTENTE EN BIENVENIDA -->
+                <div class="welcome-kaifish-avatar-container">
+                  <img class="welcome-kaifish-avatar kaifish-avatar-sync" src="images/kaifish_feliz.png" alt="Asistente Kaifish">
+                </div>
+                <div class="welcome-ai-badge">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="color: var(--accent-cyan);"><rect x="4" y="4" width="16" height="16" rx="2" ry="2"></rect><rect x="9" y="9" width="6" height="6"></rect><line x1="9" y1="1" x2="9" y2="4"></line><line x1="15" y1="1" x2="15" y2="4"></line><line x1="9" y1="20" x2="9" y2="23"></line><line x1="15" y1="20" x2="15" y2="23"></line><line x1="20" y1="9" x2="23" y2="9"></line><line x1="20" y1="15" x2="23" y2="15"></line><line x1="1" y1="9" x2="4" y2="9"></line><line x1="1" y1="15" x2="4" y2="15"></line></svg>
+                  <span>Asistente de Manufactura Electrónica</span>
+                </div>
+                <h2>¿Cómo puedo ayudarte hoy?</h2>
+                <p class="welcome-text-para">Estoy listo para ayudarte con diagnósticos, modos de falla, herramientas, procedimientos de reparación y validaciones de tarjetas en planta. ¿Qué problema deseas resolver hoy?</p>
+                
+                <div class="welcome-suggestions">
+                  <button class="suggestion-card" data-query="¿Cómo diagnosticar el error ping-gbmc-from-host-tray-fail?">
+                    <strong>Secuencia gBMC</strong>
+                    <p>Error en arranque SPI de comunicación del host. (U71/U19/XSKT1)</p>
+                  </button>
+                  <button class="suggestion-card" data-query="Regla de reemplazo VPWR y ASIC en sistema FF">
+                    <strong>Regla Espejo FF</strong>
+                    <p>Reemplazo mandatorio de potencia e implicaciones en ASIC.</p>
+                  </button>
+                  <button class="suggestion-card" data-query="Falla de secuencia primaria, ADM1266 Blackbox">
+                    <strong>ADM1266 Blackbox</strong>
+                    <p>Volcado de caja negra y señal FAN_HSWAP_PGOOD.</p>
+                  </button>
+                  <button class="suggestion-card" data-query="unexpected-exception en unidad PCBA-GF-V2">
+                    <strong>Unexpected Exception</strong>
+                    <p>Comparación de tablas vs Golden Unit y marcas (BOYD/CoolerMaster).</p>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="chat-input-container">
+            <!-- Micrófono para funciones de voz -->
+            <button id="btn-voice" class="btn-chat-action btn-chat-voice" title="Consulta por Voz (Dictar)">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path>
+                <path d="M19 10v1a7 7 0 0 1-14 0v-1M12 19v4M8 23h8"></path>
+              </svg>
+            </button>
+
+            <!-- Lectura por voz (Oculto según requerimientos de UI) -->
+            <button id="btn-read-toggle" class="btn-chat-action btn-chat-read" title="Activar/Desactivar lectura automática de respuestas" style="display: none;">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                <line x1="23" y1="9" x2="17" y2="15"></line>
+                <line x1="17" y1="9" x2="23" y2="15"></line>
+              </svg>
+            </button>
+            
+            <!-- Onda de Audio Visualizadora Estilo Siri -->
+            <div class="voice-visualizer">
+              <canvas id="siri-wave-canvas" width="100" height="20"></canvas>
+            </div>
+
+            <textarea id="chat-input" placeholder="Describe la falla o realiza una consulta técnica..." rows="1"></textarea>
+            
+            <button id="btn-send" class="btn-chat-action btn-chat-send" title="Enviar Consulta">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                <line x1="22" y1="2" x2="11" y2="13"></line>
+                <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+              </svg>
+            </button>
+        </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2. VISTA DE BIBLIOTECA VISUAL DE FALLAS -->
+    <div id="library-view" class="view-panel">
+      <div class="library-filters">
+        <div class="search-filter">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+          <input type="text" id="lib-search" placeholder="Buscar por síntoma, técnico, código de error, componente o palabra clave...">
+        </div>
+        
+        <div class="filter-selects">
+          <select id="lib-filter-client">
+            <option value="">Todos los Clientes</option>
+            <option value="Flex-GF">Flex-GF</option>
+          </select>
+          <select id="lib-filter-pn">
+            <option value="">Todos los P/N</option>
+            <option value="PCBA-GF-V2">PCBA-GF-V2</option>
+          </select>
+          <select id="lib-filter-component">
+            <option value="">Cualquier Componente</option>
+            <option value="XSKT1">XSKT1</option>
+            <option value="VPWR">VPWR</option>
+            <option value="U71">U71</option>
+            <option value="U19">U19</option>
+            <option value="ASIC">ASIC</option>
+          </select>
+        </div>
+      </div>
+      
+      <div id="library-grid" class="library-grid">
+        <!-- Tarjetas KB cargadas dinámicamente -->
+      </div>
+    </div>
+
+    <!-- 3. VISTA DE FORMULARIO DE REGISTRO -->
+    <div id="form-view" class="view-panel">
+      <div class="form-container">
+        <form id="rework-form">
+          <!-- DATOS GENERALES -->
+          <div class="panel-card">
+            <div class="panel-card-title">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="stroke:var(--accent-cyan)"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+              1. Datos Generales de la Tarjeta y Estación
+            </div>
+            
+            <div class="form-grid">
+              <div class="form-group">
+                <label for="form-pn">Número de Parte (P/N) *</label>
+                <input type="text" id="form-pn" placeholder="Ej. PCBA-GF-V2" required value="PCBA-GF-V2">
+              </div>
+              <div class="form-group">
+                <label for="form-model">Modelo *</label>
+                <input type="text" id="form-model" placeholder="Ej. Ghostfish-H2" required value="Ghostfish-H2">
+              </div>
+              <div class="form-group">
+                <label for="form-client">Cliente *</label>
+                <input type="text" id="form-client" placeholder="Ej. Flex-GF" required value="Flex-GF">
+              </div>
+              <div class="form-group">
+                <label for="form-date">Fecha *</label>
+                <input type="date" id="form-date" required>
+              </div>
+              <div class="form-group">
+                <label for="form-tech">Técnico de Diagnóstico *</label>
+                <input type="text" id="form-tech" placeholder="Nombre completo" required value="Ing. Diagnóstico Senior">
+              </div>
+              <div class="form-group">
+                <label for="form-area">Área de Operación *</label>
+                <select id="form-area">
+                  <option value="Debugging">Debugging / Diagnóstico</option>
+                  <option value="Rework">Rework / Retrabajo</option>
+                  <option value="FCT">Pruebas Funcionales</option>
+                  <option value="ICT">Pruebas In-Circuit</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="form-station">Estación / Celda *</label>
+                <input type="text" id="form-station" placeholder="Ej. ST-05" required value="ST-05">
+              </div>
+            </div>
+          </div>
+
+          <!-- DESCRIPCIÓN DE FALLA -->
+          <div class="panel-card" style="margin-top:20px;">
+            <div class="panel-card-title">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="stroke:var(--accent-cyan)"><polygon points="7.86 2 16.14 2 22 7.86 22 16.14 16.14 22 7.86 22 2 16.14 2 7.86 7.86 2"></polygon><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+              2. Reporte y Descripción de Falla
+            </div>
+            
+            <div class="form-grid">
+              <div class="form-group full-width">
+                <label for="form-symptom">Síntoma Observado en Estación *</label>
+                <input type="text" id="form-symptom" placeholder="Describe brevemente la falla observada..." required>
+              </div>
+              <div class="form-group">
+                <label for="form-errcode">Código de Error (Si aplica)</label>
+                <input type="text" id="form-errcode" placeholder="Ej. ping-gbmc-from-host-tray-fail">
+              </div>
+              <div class="form-group">
+                <label for="form-testresult">Resultado de Prueba Automática</label>
+                <input type="text" id="form-testresult" placeholder="Ej. Falla en prueba funcional SPI">
+              </div>
+            </div>
+          </div>
+
+          <!-- ANÁLISIS REALIZADO -->
+          <div class="panel-card" style="margin-top:20px;">
+            <div class="panel-card-title">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="stroke:var(--accent-cyan)"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
+              3. Análisis y Pruebas Realizadas
+            </div>
+            
+            <div class="form-grid">
+              <div class="form-group full-width">
+                <label for="form-measurements">Mediciones Efectuadas (Voltajes, Resistencias, Señales) *</label>
+                <textarea id="form-measurements" placeholder="Ej. Riel de 3.3V medido en 3.28V. Resistencia a GND en XSKT1 pin 8 en 150 Ohms..." required></textarea>
+              </div>
+              <div class="form-group">
+                <label for="form-comp-eval">Componentes Evaluados (Separados por coma)</label>
+                <input type="text" id="form-comp-eval" placeholder="Ej. U71, U19, XSKT1">
+              </div>
+              <div class="form-group">
+                <label for="form-rootcause">Causa Raíz Identificada *</label>
+                <input type="text" id="form-rootcause" placeholder="Ej. Soldadura fría en pin de reloj SPI" required>
+              </div>
+            </div>
+          </div>
+
+          <!-- SOLUCIÓN IMPLEMENTADA Y EVIDENCIAS -->
+          <div class="panel-card" style="margin-top:20px;">
+            <div class="panel-card-title">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="stroke:var(--accent-cyan)"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path></svg>
+              4. Solución y Evidencia Visual (Imágenes)
+            </div>
+            
+            <div class="form-grid">
+              <div class="form-group">
+                <label for="form-comp-replaced">Componente(s) Reemplazado(s) *</label>
+                <input type="text" id="form-comp-replaced" placeholder="Ej. XSKT1" required>
+              </div>
+              <div class="form-group">
+                <label for="form-solution">Solución Aplicada (Rework) *</label>
+                <input type="text" id="form-solution" placeholder="Ej. Reemplazo de memoria flash SPI mediante aire caliente" required>
+              </div>
+              <div class="form-group full-width">
+                <label for="form-validation-method">Método de Validación de Reparación *</label>
+                <input type="text" id="form-validation-method" placeholder="Ej. 10 ciclos de encendido y ping a gBMC exitoso" required>
+              </div>
+              <div class="form-group full-width">
+                <label for="form-lessons">Lecciones Aprendidas / Recomendación Preventiva</label>
+                <textarea id="form-lessons" placeholder="Ej. Asegurar limpieza total de flux residual para evitar cortocircuitos por humedad..."></textarea>
+              </div>
+              
+              <!-- Carga de Evidencia Visual -->
+              <div class="form-group full-width evidence-section">
+                <label>Captura de Evidencia Visual (Se convertirá a WebP/JPG de resolución máxima 1280x720, < 500 KB)</label>
+                
+                <input type="file" id="photo-input" accept="image/*" multiple style="display:none;">
+                <div id="upload-area" class="upload-area">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                    <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                    <polyline points="21 15 16 10 5 21"></polyline>
+                  </svg>
+                  <p>Arrastra fotografías de la falla o haz clic para subir</p>
+                  <span>Tipos: Zona dañada, medición, multímetro/osciloscopio, antes/después de soldar.</span>
+                </div>
+                
+                <!-- Vista previa de imágenes subidas y campos de metadatos -->
+                <div id="uploaded-photos-grid" class="uploaded-photos-grid">
+                  <!-- Fotos cargadas mediante Canvas van aquí -->
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Botones de Acción del Formulario -->
+          <div class="form-actions" style="margin-top: 24px;">
+            <button type="button" id="btn-cancel" class="btn-form btn-form-cancel">Limpiar</button>
+            <button type="submit" id="btn-submit" class="btn-form btn-form-submit">Guardar Diagnóstico</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- 4. VISTA DE DASHBOARD DE CONOCIMIENTO -->
+    <div id="dashboard-view" class="view-panel">
+      <!-- Fila de Tarjetas KPI -->
+      <div class="dashboard-kpis">
+        <div class="kpi-card kpi-total">
+          <div class="kpi-title">Casos Registrados</div>
+          <div id="kpi-total-val" class="kpi-val">0</div>
+          <div class="kpi-desc">Base de Conocimiento Local</div>
+        </div>
+        <div class="kpi-card kpi-valid">
+          <div class="kpi-title">Casos Validados</div>
+          <div id="kpi-valid-val" class="kpi-val">0</div>
+          <div class="kpi-desc">Soluciones Confirmadas al 100%</div>
+        </div>
+        <div class="kpi-card kpi-reuse">
+          <div class="kpi-title">Usos Exitosos</div>
+          <div id="kpi-reuse-val" class="kpi-val">0</div>
+          <div class="kpi-desc">Reutilización del Conocimiento</div>
+        </div>
+        <div class="kpi-card kpi-success">
+          <div class="kpi-title">Efectividad Media</div>
+          <div id="kpi-success-val" class="kpi-val">0%</div>
+          <div class="kpi-desc">Calificaciones Positivas</div>
+        </div>
+      </div>
+
+      <!-- Fila de Gráficos de Torta y Barras -->
+      <div class="dashboard-charts">
+        <div class="chart-card">
+          <div class="chart-title">Fuente de Resolución de Consultas</div>
+          <div class="chart-container-wrapper">
+            <canvas id="chart-source"></canvas>
+          </div>
+        </div>
+        
+        <div class="chart-card">
+          <div class="chart-title">Componentes con Mayor Tasa de Falla</div>
+          <div class="chart-container-wrapper">
+            <canvas id="chart-components"></canvas>
+          </div>
+        </div>
+      </div>
+
+      <!-- Fila de Tablas y Listados Rápidos -->
+      <div class="dashboard-grids">
+        <div class="table-card">
+          <div class="chart-title">Top 5 Fallas Reutilizadas</div>
+          <table class="dashboard-table">
+            <thead>
+              <tr>
+                <th>Rango</th>
+                <th>Falla / Síntoma</th>
+                <th>Usos Exitosos</th>
+              </tr>
+            </thead>
+            <tbody id="table-top-failures-body">
+              <!-- Cargado dinámicamente -->
+            </tbody>
+          </table>
+        </div>
+
+        <div class="table-card">
+          <div class="chart-title">Top 5 Componentes Retrabajados</div>
+          <table class="dashboard-table">
+            <thead>
+              <tr>
+                <th>Rango</th>
+                <th>ID Componente</th>
+                <th>Incidencias</th>
+              </tr>
+            </thead>
+            <tbody id="table-top-components-body">
+              <!-- Cargado dinámicamente -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- 5. VISTA DE MANUALES Y DOCUMENTOS GF* -->
+    <div id="docs-view" class="view-panel">
+      <div class="docs-layout">
+        <!-- Columna de Lista de Documentos -->
+        <div class="docs-list-panel">
+          <div class="docs-list-header">Documentos Oficiales GF*</div>
+          <div id="docs-list-items" class="docs-items">
+            <!-- Cargado dinámicamente -->
+          </div>
+        </div>
+        
+        <!-- Columna de Visor de Documento Seleccionado -->
+        <div id="docs-view-content" class="docs-view-panel">
+          <!-- Renderizado de Markdown aquí -->
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- ====================================================================
+       VENTANAS MODALES EMERGENTES (OVERLAYS)
+       ==================================================================== -->
+  
+  <!-- MODAL: VALIDACIÓN DE NUEVO CONOCIMIENTO -->
+  <div id="validation-modal" class="modal-overlay">
+    <div class="modal-content">
+      <div class="modal-title">Validación de Reparación</div>
+      <div class="modal-description">¿Confirmas que la solución implementada resolvió completamente la falla en esta tarjeta? Selecciona el nivel de validación para registrarlo:</div>
+      
+      <div class="validation-options">
+        <div class="validation-opt-card selected" data-level="Validated">
+          <div class="opt-indicator"></div>
+          <div class="opt-details">
+            <span class="opt-title">Validada</span>
+            <span class="opt-desc">La reparación fue probada en FCT y pasó todos los ciclos de pruebas.</span>
+          </div>
+        </div>
+        
+        <div class="validation-opt-card" data-level="Partially Validated">
+          <div class="opt-indicator"></div>
+          <div class="opt-details">
+            <span class="opt-title">Parcialmente Validada</span>
+            <span class="opt-desc">La tarjeta encendió pero faltan pruebas térmicas o funcionales extendidas.</span>
+          </div>
+        </div>
+        
+        <div class="validation-opt-card" data-level="Not Validated">
+          <div class="opt-indicator"></div>
+          <div class="opt-details">
+            <span class="opt-title">No Validada</span>
+            <span class="opt-desc">Rework mecánico aplicado sin confirmación funcional en la estación.</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-actions">
+        <button id="btn-modal-cancel" class="btn-form btn-form-cancel" style="padding:8px 16px;">Cancelar</button>
+        <button id="btn-modal-confirm" class="btn-form btn-form-submit" style="padding:8px 16px;">Confirmar y Guardar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: DETALLES DE CASO KB -->
+  <div id="kb-detail-overlay" class="kb-detail-overlay">
+    <div class="kb-detail-modal">
+      <div class="kb-detail-header">
+        <div class="kb-detail-title">Detalle de Solución Documentada</div>
+        <button class="kb-detail-close" onclick="closeCaseDetails()">✕</button>
+      </div>
+      <div id="kb-detail-content">
+        <!-- Contenido inyectado dinámicamente -->
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: AUTENTICACIÓN PARA ACCESO RESTRINGIDO -->
+  <div id="auth-modal-overlay" class="kb-detail-overlay">
+    <div class="kb-detail-modal" style="max-width: 400px; padding: 24px; box-shadow: 0 10px 40px rgba(0,0,0,0.1); border-radius: 12px; background: #ffffff;">
+      <div class="kb-detail-header" style="border-bottom: 1px solid var(--panel-border); padding-bottom: 12px; margin-bottom: 16px; display: flex; justify-content: space-between; align-items: center;">
+        <div class="kb-detail-title" style="font-size: 1.15rem; font-weight: 700; color: var(--accent-cyan);">Acceso Restringido</div>
+        <button class="kb-detail-close" onclick="closeAuthModal()">✕</button>
+      </div>
+      <div style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 16px; line-height: 1.5;">
+        Esta sección requiere permisos de Líder de Área. Por favor ingrese sus credenciales.
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 14px; margin-bottom: 20px;">
+        <div style="display: flex; flex-direction: column; gap: 6px;">
+          <label for="auth-username" style="font-size: 0.8rem; font-weight: 600; color: var(--text-primary);">Usuario</label>
+          <input type="text" id="auth-username" style="padding: 10px 12px; border: 1px solid var(--panel-border); border-radius: 8px; font-size: 0.9rem; background: #ffffff; color: var(--text-primary); outline: none; transition: border-color 0.2s;" placeholder="Nombre de usuario" onkeydown="if(event.key==='Enter') submitAuth()">
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 6px;">
+          <label for="auth-password" style="font-size: 0.8rem; font-weight: 600; color: var(--text-primary);">Contraseña</label>
+          <input type="password" id="auth-password" style="padding: 10px 12px; border: 1px solid var(--panel-border); border-radius: 8px; font-size: 0.9rem; background: #ffffff; color: var(--text-primary); outline: none; transition: border-color 0.2s;" placeholder="Contraseña" onkeydown="if(event.key==='Enter') submitAuth()">
+        </div>
+        <div id="auth-error-msg" style="color: var(--accent-red); font-size: 0.8rem; display: none; font-weight: 600; margin-top: 4px;">
+          No cuenta con permisos para realizar esta acción.
+        </div>
+      </div>
+      <div class="modal-actions" style="display: flex; justify-content: flex-end; gap: 12px; margin-top: 12px;">
+        <button id="btn-auth-cancel" class="btn-form btn-form-cancel" style="padding: 8px 16px;" onclick="closeAuthModal()">Cancelar</button>
+        <button id="btn-auth-submit" class="btn-form btn-form-submit" style="padding: 8px 16px;" onclick="submitAuth()">Ingresar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: LIGHTBOX AMPLIFICACIÓN DE IMÁGENES -->
+  <div id="lightbox-overlay" class="img-lightbox-overlay" onclick="closeLightbox()">
+    <div class="img-lightbox-modal" onclick="event.stopPropagation()">
+      <button class="img-lightbox-close" onclick="closeLightbox()">✕</button>
+      <img id="lightbox-img" src="" alt="Zoom Evidencia">
+      <div id="lightbox-caption" class="img-lightbox-caption"></div>
+      <div id="lightbox-obs" class="img-lightbox-obs"></div>
+    </div>
+  </div>
+
+  <!-- CONEXIONES A APIS EXTERNAS -->
+  <!-- Supabase CDN (UMD para acceso global como 'window.supabase') -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <!-- GitHub Octokit CDN (Cargado como módulo y expuesto globalmente) -->
+  <script type="module">
+    import { Octokit } from "https://esm.sh/octokit";
+    window.Octokit = Octokit;
+  </script>
+
+  <!-- Script de Inicialización para Supabase y GitHub -->
+  <script>
+    // ==========================================
+    // 1. CONFIGURACIÓN DE SUPABASE
+    // ==========================================
+    // REEMPLAZA CON TU URL Y CLAVE ANÓNIMA DE SUPABASE
+    // Las encuentras en: Project Settings > API en tu dashboard de Supabase
+    const SUPABASE_URL = "https://srajbewbqjmatfmyzsyf.supabase.co/rest/v1/";
+    const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNyYWpiZXdicWptYXRmbXl6c3lmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODc1ODA2NzQsImV4cCI6MjEwMzE1NjY3NH0.eND_SCvv6b63fiaD_5692YPq2nicyVlZuUPyATy2a00";
+
+    // Inicialización del cliente Supabase en el objeto global
+    window.supabaseClient = null;
+    if (window.supabase) {
+      window.supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+      console.log("Supabase inicializado correctamente.");
+    } else {
+      console.warn("No se pudo cargar la librería de Supabase.");
+    }
+
+    // ==========================================
+    // 2. CONFIGURACIÓN DE GITHUB (OCTOKIT)
+    // ==========================================
+    // REEMPLAZA CON TU TOKEN DE ACCESO PERSONAL (PAT)
+    // ADVERTENCIA: En un entorno de frontend puro, este token es visible en el navegador.
+    const GITHUB_TOKEN = "TU_GITHUB_TOKEN_AQUI";
+
+    window.githubClient = null;
+    window.addEventListener('load', () => {
+      if (window.Octokit) {
+        window.githubClient = new window.Octokit({
+          auth: GITHUB_TOKEN || undefined
+        });
+        console.log("GitHub Octokit inicializado correctamente.");
+      } else {
+        console.warn("No se pudo cargar la librería de Octokit para GitHub.");
+      }
+    });
+  </script>
+
+  <!-- ARCHIVOS DE DATOS Y LÓGICA -->
+  <script src="mockData.js?v=1.8.2"></script>
+  <script src="app.js?v=1.8.2"></script>
+</body>
+</html>
